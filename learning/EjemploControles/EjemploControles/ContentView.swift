@@ -22,18 +22,30 @@ extension Color {
 
 struct ContentView: View {
     
+    // Picker
     @State private var pickerValue : Int = 1
-    @State private var colorStr = "Yellow" // Default is yellow
+    @State private var colorStr = "Red" // Default is red
     
+    // Slider
     @State private var sliderValue : Double = 50.0
+    @State private var isEditingSlider : Bool = false
+    @State private var sliderColor : Color = Color(red: 125/255, green: 0, blue: 0)
     
+    // Toggle
     @State private var toggleValue : Bool = false
     
-    func showColorPalette(color : Int) {
-        
+    func updateColorString() {
+        if pickerValue == 1 {
+            colorStr = "Red"
+            sliderColor = Color(red: sliderValue/255, green: 0.1, blue: 0.1)
+        } else if pickerValue == 2 {
+            colorStr = "Green"
+            sliderColor = Color(red: 0.1, green: sliderValue/255, blue: 0.1)
+        } else {
+            colorStr = "Blue"
+            sliderColor = Color(red: 0.1, green: 0.1, blue: sliderValue/255)
+        }
     }
-    
-    
     
     var body: some View {
         
@@ -53,20 +65,32 @@ struct ContentView: View {
                 // Para seleccionar un item de una lista
                 Picker(selection: $pickerValue, label: Text("Selector")) {
                     Text("Red").tag(1)
-                    Text("Yellow").tag(2)
+                    Text("Green").tag(2)
                     Text("Blue").tag(3)
                 }
                     .pickerStyle(.segmented)
                 //  .pickerStyle(.wheel)
                     .onChange(of: pickerValue) {
-                        showColorPalette(color: pickerValue)
+                        pickerValue = pickerValue
+                        updateColorString()
                     }
                 
                 Text("Change intensity")
                     .padding(.top, 20)
             
-                Slider(value: $sliderValue, in: 0 ... 100,
-                       onEditingChanged: {editing in }).tint(Color(hex: 0x697565))
+                Slider(
+                    value: $sliderValue,
+                    in: 0...255,
+                    onEditingChanged: { editing in
+                        isEditingSlider = editing
+                    }
+                )
+                .tint(sliderColor)
+                .onChange(of: sliderValue) {
+                    if isEditingSlider {
+                        updateColorString()
+                    }
+                }
                 
                 Toggle("Inverse colors", isOn: $toggleValue) 
                     .tint(Color(hex: 0x1E201E))
