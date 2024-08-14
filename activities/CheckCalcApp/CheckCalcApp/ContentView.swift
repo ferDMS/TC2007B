@@ -26,22 +26,32 @@ struct ContentView: View {
     @State private var spendingInput : String = ""
     @State private var groupSizeInput : String = ""
     @State private var tipPercentageInput : String = ""
-    @State private var isFreeForOne : Bool = false
+    @State private var freeForOne : Bool = false
     let defaultTip = 10.0
+    
+    // Variables to show validation errors
+    @State private var isSpendingValid : Bool = true
+    @State private var isGroupSizeValid : Bool = true
+    @State private var isTipPercentageValid : Bool = true
+    @State private var isFreeForOneValid : Bool = true
+    
     
     // For picker wheel options
     let groupSizes : [String] = [""] + Array(1...20).map{ String($0) }
     
     // Final result variables
+    @State private var errorText : String = ""
+    @State private var showError : Bool = false
     @State private var showResult : Bool = false
     @State private var spentPerPersonOutput : String = ""
     
     func isValidInput() -> Bool {
-        let isTotalCostValid = Double(spendingInput) != nil
-        let isGroupSizeValid = !groupSizeInput.isEmpty
-        let isTipPercentageValid = tipPercentageInput.isEmpty || Double(tipPercentageInput) != nil
-
-        return isTotalCostValid && isGroupSizeValid && isTipPercentageValid
+        isSpendingValid = Double(spendingInput) != nil
+        isGroupSizeValid = !groupSizeInput.isEmpty
+        isTipPercentageValid = tipPercentageInput.isEmpty || Double(tipPercentageInput) != nil
+        isFreeForOneValid = !freeForOne || (freeForOne && isGroupSizeValid && Double(groupSizeInput)! > 1)
+        
+        return isSpendingValid && isGroupSizeValid && isTipPercentageValid && isFreeForOneValid
     }
     
     func calcResult() {
@@ -49,7 +59,7 @@ struct ContentView: View {
         var groupSize = Double(groupSizeInput)!
         let tipPercentage = tipPercentageInput.isEmpty ? defaultTip : Double(tipPercentageInput)!
         
-        if isFreeForOne {
+        if freeForOne {
             groupSize -= 1
         }
         
@@ -60,6 +70,31 @@ struct ContentView: View {
         
         spentPerPersonOutput = String(format: "%.2f", roundedValue)
         showResult = true
+    }
+    
+    func runCalcInput() {
+        if isValidInput() {
+            calcResult()
+            
+        } else{
+            errorText = ""
+            
+            if !isSpendingValid {
+                errorText += "Provide a valid spending amount\n"
+            }
+            if !isGroupSizeValid {
+                errorText += "Choose a valid group size\n"
+            }
+            if !isTipPercentageValid {
+                errorText += "Enter a valid tip\n"
+            }
+            if !isFreeForOneValid {
+                freeForOne = false
+                errorText += "Can't Free-for-One a 1-sized group"
+            }
+            
+            showError = true
+        }
     }
 
     var body: some View {
@@ -111,7 +146,7 @@ struct ContentView: View {
                                     .background(
                                         RoundedRectangle(cornerRadius: 10)
                                             .fill(Color(hex: 0xf3ece0))
-                                            .stroke(.black, lineWidth: 2)
+                                            .stroke(isSpendingValid ? .black : .red, lineWidth: 2)
                                         
                                     )
                                 
@@ -148,7 +183,7 @@ struct ContentView: View {
                             .background(
                                 RoundedRectangle(cornerRadius: 10)
                                     .fill(Color(hex: 0xf3ece0))
-                                    .stroke(.black, lineWidth: 2)
+                                    .stroke(isGroupSizeValid ? .black : .red, lineWidth: 2)
                             )
                         }
                     }
@@ -177,7 +212,7 @@ struct ContentView: View {
                                     .background(
                                         RoundedRectangle(cornerRadius: 10)
                                             .fill(Color(hex: 0xf3ece0))
-                                            .stroke(.black, lineWidth: 2)
+                                            .stroke(isTipPercentageValid ? .black : .red, lineWidth: 2)
                                         
                                     )
                                 
@@ -202,36 +237,36 @@ struct ContentView: View {
                             Spacer()
                         }
                         
-                        Toggle("", isOn: $isFreeForOne)
+                        Toggle("", isOn: $freeForOne)
                             .tint(Color(hex: 0x1E201E))
-                            .onChange(of: isFreeForOne) {
+                            .onChange(of: freeForOne) {
                             oldValue, newValue in
                         }
                     }
                     
-                    HStack {
-                        Spacer()
-                        
-                        Button(action: {
-                            if isValidInput() {
-                                calcResult()
-                            }
-                        }) {
-                            Text("Calculate")
-                                .font(.title)
-                        }
-                        .buttonStyle(.borderedProminent)
-                        .tint(Color(hex: 0xdcc5a2))
-                        .foregroundColor(.black)
-                        .padding(.top, 25)
-                        
-                        Spacer()
-                    }
+                    
                 } // VStack
                 .padding(.horizontal, 15)
             } // ScrollView
             
             Spacer()
+            
+            HStack {
+                Spacer()
+                
+                Button(action: {
+                    runCalcInput()
+                }) {
+                    Text("Calculate")
+                        .font(.title)
+                }
+                .buttonStyle(.borderedProminent)
+                .tint(Color(hex: 0xdcc5a2))
+                .foregroundColor(.black)
+                .padding(EdgeInsets(top: 20, leading: 0, bottom: 40, trailing: 0))
+                
+                Spacer()
+            }
             
             HStack {
                 Text("by Fernando Monroy")
@@ -247,6 +282,9 @@ struct ContentView: View {
         } // VStack for background color
         .padding()
         .background(Color(hex: 0xECDFCC))
+        .alert(errorText, isPresented: $showError) {
+            Button("OK") {}
+        }
     }
 }
 
