@@ -20,6 +20,12 @@ extension Color {
     }
 }
 
+// Snippet online
+// A method to hide the keyboard
+func hideKeyboard() {
+    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+}
+
 struct ContentView: View {
     
     // Variables to obtain input
@@ -102,6 +108,8 @@ struct ContentView: View {
             
             showError = true
         }
+        
+        hideKeyboard()
     }
 
     var body: some View {
@@ -155,7 +163,7 @@ struct ContentView: View {
                                 
                                 TextField("00.00", text: $spendingInput)
                                     .frame(height: 40)
-                                    .keyboardType(.numberPad)
+                                    .keyboardType(.decimalPad)
                                     .fontWeight(.bold)
                                     .padding(EdgeInsets(top: 0, leading: 30, bottom: 0, trailing: 10)) // Add leading padding to shift text right
                                     .background(
@@ -221,7 +229,7 @@ struct ContentView: View {
                                 
                                 TextField("10", text: $tipPercentageInput)
                                     .frame(height: 40)
-                                    .keyboardType(.numberPad)
+                                    .keyboardType(.decimalPad)
                                     .fontWeight(.bold)
                                     .padding(EdgeInsets(top: 0, leading: 30, bottom: 0, trailing: 10)) // Add leading padding to shift text right
                                     .background(
@@ -262,6 +270,23 @@ struct ContentView: View {
                         }
                     }
                     
+                    HStack {
+                        Spacer()
+                        
+                        Button(action: {
+                            runCalcInput()
+                        }) {
+                            Text("Calculate")
+                                .font(.title)
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .tint(Color(hex: 0xdcc5a2))
+                        .foregroundColor(.black)
+                        .padding(EdgeInsets(top: 20, leading: 0, bottom: 20, trailing: 0))
+                        
+                        Spacer()
+                    }
+                    
                     
                 } // VStack
                 .padding(.horizontal, 15)
@@ -270,27 +295,12 @@ struct ContentView: View {
             Spacer()
             
             HStack {
-                Spacer()
-                
-                Button(action: {
-                    runCalcInput()
-                }) {
-                    Text("Calculate")
-                        .font(.title)
-                }
-                .buttonStyle(.borderedProminent)
-                .tint(Color(hex: 0xdcc5a2))
-                .foregroundColor(.black)
-                .padding(EdgeInsets(top: 20, leading: 0, bottom: 20, trailing: 0))
-                
-                Spacer()
-            }
-            
-            HStack {
                 Text("by Fernando Monroy")
                     .foregroundColor(Color(hex: 0x5d4523))
                     .opacity(0.5)
+                
                 Spacer()
+                
                 Text("A01750536")
                     .foregroundColor(Color(hex: 0x5d4523))
                     .opacity(0.5)
@@ -300,6 +310,10 @@ struct ContentView: View {
         } // VStack for background color
         .padding()
         .background(Color(hex: 0xECDFCC))
+        .ignoresSafeArea(.keyboard)
+        .onTapGesture {
+            hideKeyboard()
+        }
         .alert(errorText, isPresented: $showError) {
             Button("OK") {}
         }
