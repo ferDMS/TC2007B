@@ -44,6 +44,7 @@ struct ContentView: View {
     @State private var showError : Bool = false
     @State private var showResult : Bool = false
     @State private var spentPerPersonOutput : String = ""
+    @State private var randomPersonOutput : String = ""
     
     func isValidInput() -> Bool {
         isSpendingValid = Double(spendingInput) != nil
@@ -60,6 +61,10 @@ struct ContentView: View {
         let tipPercentage = tipPercentageInput.isEmpty ? defaultTip : Double(tipPercentageInput)!
         
         if freeForOne {
+            let randomPerson = Int.random(in: 1...Int(groupSize))
+            randomPersonOutput = String(randomPerson)
+            
+            // To make calculations with one person less
             groupSize -= 1
         }
         
@@ -69,6 +74,8 @@ struct ContentView: View {
         let roundedValue = ceil(spentPerPerson * 100) / 100
         
         spentPerPersonOutput = String(format: "%.2f", roundedValue)
+        
+        // Show result
         showResult = true
     }
     
@@ -83,14 +90,14 @@ struct ContentView: View {
                 errorText += "Provide a valid spending amount\n"
             }
             if !isGroupSizeValid {
-                errorText += "Choose a valid group size\n"
+                errorText += "\nChoose a valid group size\n"
             }
             if !isTipPercentageValid {
-                errorText += "Enter a valid tip\n"
+                errorText += "\nEnter a valid tip\n"
             }
             if !isFreeForOneValid {
                 freeForOne = false
-                errorText += "Can't Free-for-One a 1-sized group"
+                errorText += "\nCan't Free-for-One a 1-sized group"
             }
             
             showError = true
@@ -108,18 +115,26 @@ struct ContentView: View {
                 .foregroundColor(Color(hex: 0x1E201E))
             
             ScrollView {
-                
-                if showResult {
-                    
-                    VStack (alignment: .center) {
-                        Text("To pay per person:")
-                            .font(.system(size: 30)) // Custom size
 
+                VStack (alignment: .center) {
+                    
+                    if showResult {
+                        
+                        Text("To pay per person:")
+                            .font(.title3) // Custom size
+                        
                         Text("$\(spentPerPersonOutput)")
-                            .font(.system(size: 40, weight: .bold))
+                            .font(.system(size: 50, weight: .bold))
+                            .padding(.bottom, -5)
+                        
+                        if freeForOne {
+                            Text("Person \(randomPersonOutput) doesn't pay the bill! 🎉")
+                                .padding(.top, 5)
+                                .font(.body)
+                        }
                         
                     }
-                    .padding()
+                    
                 }
                 
                 VStack {
@@ -241,6 +256,9 @@ struct ContentView: View {
                             .tint(Color(hex: 0x1E201E))
                             .onChange(of: freeForOne) {
                             oldValue, newValue in
+                                if showResult {
+                                    runCalcInput()
+                                }
                         }
                     }
                     
@@ -263,7 +281,7 @@ struct ContentView: View {
                 .buttonStyle(.borderedProminent)
                 .tint(Color(hex: 0xdcc5a2))
                 .foregroundColor(.black)
-                .padding(EdgeInsets(top: 20, leading: 0, bottom: 40, trailing: 0))
+                .padding(EdgeInsets(top: 20, leading: 0, bottom: 20, trailing: 0))
                 
                 Spacer()
             }
