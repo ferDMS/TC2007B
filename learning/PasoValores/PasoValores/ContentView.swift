@@ -81,6 +81,7 @@ struct ContentView: View {
                 Color(red: 236/255.0, green: 223/255.0, blue: 204/255.0)
             )
         }
+        .navigationBarTitle("Volver")
     }
 }
 
