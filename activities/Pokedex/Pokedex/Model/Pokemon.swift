@@ -16,7 +16,7 @@ struct PaginationResponse: Codable {
     var results: [InfoBrief]
 }
 
-// To parse the PaginationResponse
+// To parse any info that is presented in a brief manner
 // We basically get a URL to the actual resource we want
 struct InfoBrief: Codable {
     var name: String
@@ -67,6 +67,19 @@ class Pokemon: Codable, Identifiable {
     var speciesInfo: Species? {
         fetchOneInfoBrief(infoBrief: species)
     }
+    var fact: String {
+        // Find the first flavor text entry where the language is English
+        if let englishEntry = self.speciesInfo?.flavor_text_entries.last(where: { $0.language.name == "en" }) {
+            let cleanEnglishEntry = englishEntry.flavor_text.replacingOccurrences(of: "\n", with: " ")
+            // Step 2: Use regex to find the first sentence
+            if let match = cleanEnglishEntry.range(of: "^[^.]*\\.(?=\\s|$)", options: .regularExpression) {
+                let firstSentence = String(cleanEnglishEntry[match])
+                return firstSentence
+            }
+            return ""
+        }
+        return ""
+    }
     
     
     // Properties to obtain Abilities related info
@@ -90,17 +103,9 @@ class Pokemon: Codable, Identifiable {
     }
     
     
-    var imgUrl: String {
-        self.sprites.other.officialArtwork.front_default
-    }
-    
-    var small_text: String {
-        return self.speciesInfo?.flavor_text_entries.first?.flavor_text ?? ""
-    }
-    
-    
     // Properties to obtain the Image and related info
     struct Sprites: Codable {
+        var front_default: String
         var other: Other
         struct Other: Codable {
             // In this case, we are looking for the object "OfficialArtwork"
@@ -114,6 +119,9 @@ class Pokemon: Codable, Identifiable {
                 var front_default: String
             }
         }
+    }
+    var imgUrl: String {
+        self.sprites.front_default
     }
 }
 
@@ -187,7 +195,7 @@ func getManyPokemon(completion: @escaping ([Pokemon]) -> Void) {
     var pokemonInfoList: [Pokemon] = []
     
     // Make sure the URL is valid
-    guard let url = URL(string: "https://pokeapi.co/api/v2/pokemon/") else {
+    guard let url = URL(string: "https://pokeapi.co/api/v2/pokemon/?limit=40") else {
         completion(pokemonInfoList) // Call completion with an empty list if unsuccessful
         return
     }

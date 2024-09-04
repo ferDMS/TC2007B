@@ -10,49 +10,62 @@ import SwiftUI
 struct PokemonRow: View {
     
     var pokemon: Pokemon
+    var typeList: [String] {
+        pokemon.types.map { $0.type.name }
+    }
     
     var body: some View {
         
-        VStack (alignment: .leading) {
-
-            HStack {
-                
-                // Image
-                ZStack {
-                    Color.pokeLightGray
-                        .frame(width: 128, height: 128)
-                        .clipShape(RoundedRectangle(cornerRadius: 25))
+        HStack {
+            
+            // Image
+            ZStack {
+                AsyncImage(url: URL(string: pokemon.imgUrl)) { image in
+                    image
+                        .resizable()
+                        .scaledToFit()
                     
-                    AsyncImage(url: URL(string: pokemon.imgUrl)) { image in
-                        image
-                            .resizable()
-                            .scaledToFill()
-                    } placeholder: {
-                        Color.white
-                    }
-                    .frame(width: 128, height: 128)
-                    .clipShape(RoundedRectangle(cornerRadius: 25))
+                } placeholder: {
+                    Color.white
                 }
-                // Clip everything in frame
-                .frame(width: 128, height: 128)
-                .clipShape(RoundedRectangle(cornerRadius: 25))
-                .padding(10)
-                
+            }
+            .frame(width: 100, height: 100)
+            
+            
+            // Info
+            HStack {
                 VStack (alignment: .leading) {
+                    
+                    
                     // Name
                     Text(pokemon.name.capitalized)
                         .font(.title)
-                    // Type(s)
-                    Text("Type: \(pokemon.types.first?.type.name.capitalized ?? "")")
-                    // Small description
-                    Text("")
-                    //                Text(pokemon.small_text + "Hola")
+                        .fontWeight(.bold)
+                        .padding(.bottom, -5)
                     
-                    
-                    
+                    HStack {
+                        // Types
+                        ForEach(typeList, id: \.self) { type in
+                            Text(type.capitalized)
+                                .font(.subheadline)
+                                .fontWeight(.bold)
+                                .padding(.horizontal, 8)
+                                .padding(.vertical, 4)
+                                .background(pokemonTypeColors[type]) // Background color for the tag
+                                .cornerRadius(8) // Rounded corners for the tag
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .stroke(Color.black, lineWidth: 2) // Border color and width
+                                )
+                        }
+                    }
                 }
             }
+            
+            // Spacing
+            HStack {Spacer()}
         }
+        .padding(.vertical, 0)
     }
 }
 
