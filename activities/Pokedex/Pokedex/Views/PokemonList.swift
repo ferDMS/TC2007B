@@ -17,9 +17,7 @@ struct PokemonList: View {
     
     var body: some View {
         NavigationSplitView {
-            
-            
-            
+
             List {
                 
                 // Developer info
@@ -52,6 +50,11 @@ struct PokemonList: View {
                     
                 }
                 .listStyle(PlainListStyle()) // Remove extra styling in list
+                
+                if pokemonList.isEmpty {
+                    Text("Error fetching data :(")
+                }
+                
             }
         } detail: {
             Text("Select a pokemon")

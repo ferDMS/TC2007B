@@ -14,8 +14,6 @@ struct ContentView: View {
         modelData.pokemonList
     }
     
-    @State private var pokemon : Pokemon? = nil
-    
     var body: some View {
         
         // VStack for background color
@@ -31,6 +29,7 @@ struct ContentView: View {
             
         } // VStack for background color
         .background(Color.pokeWhite)
+        .ignoresSafeArea()
     }
 
 }

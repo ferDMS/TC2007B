@@ -59,6 +59,7 @@ class Pokemon: Codable, Identifiable {
     var species: InfoBrief
     struct Species: Codable {
         var flavor_text_entries: [flavor_text_entry]
+        let base_happiness: Int
         struct flavor_text_entry: Codable {
             var flavor_text: String
             var language: InfoBrief
@@ -195,7 +196,7 @@ func getManyPokemon(completion: @escaping ([Pokemon]) -> Void) {
     var pokemonInfoList: [Pokemon] = []
     
     // Make sure the URL is valid
-    guard let url = URL(string: "https://pokeapi.co/api/v2/pokemon/?limit=40") else {
+    guard let url = URL(string: "https://pokeapi.co/api/v2/pokemon/?limit=20") else {
         completion(pokemonInfoList) // Call completion with an empty list if unsuccessful
         return
     }
