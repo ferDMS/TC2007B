@@ -12,6 +12,9 @@
 		EBF6C3082C99D91F00DF9CCE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EBF6C3072C99D91F00DF9CCE /* Assets.xcassets */; };
 		EBF6C30B2C99D91F00DF9CCE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EBF6C30A2C99D91F00DF9CCE /* Preview Assets.xcassets */; };
 		EBF6C3122C99DB9800DF9CCE /* DetalleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF6C3112C99DB9800DF9CCE /* DetalleView.swift */; };
+		EBF6C3172C99DF8A00DF9CCE /* MarioMundoAgua.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EBF6C3142C99DF8A00DF9CCE /* MarioMundoAgua.mp3 */; };
+		EBF6C3182C99DF8A00DF9CCE /* MarioCastillo.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EBF6C3152C99DF8A00DF9CCE /* MarioCastillo.mp3 */; };
+		EBF6C3192C99DF8A00DF9CCE /* MarioBros.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EBF6C3162C99DF8A00DF9CCE /* MarioBros.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +24,9 @@
 		EBF6C3072C99D91F00DF9CCE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EBF6C30A2C99D91F00DF9CCE /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		EBF6C3112C99DB9800DF9CCE /* DetalleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetalleView.swift; sourceTree = "<group>"; };
+		EBF6C3142C99DF8A00DF9CCE /* MarioMundoAgua.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = MarioMundoAgua.mp3; sourceTree = "<group>"; };
+		EBF6C3152C99DF8A00DF9CCE /* MarioCastillo.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = MarioCastillo.mp3; sourceTree = "<group>"; };
+		EBF6C3162C99DF8A00DF9CCE /* MarioBros.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = MarioBros.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +59,7 @@
 		EBF6C3022C99D91D00DF9CCE /* DefaultsApp */ = {
 			isa = PBXGroup;
 			children = (
+				EBF6C3132C99DF7B00DF9CCE /* Sounds */,
 				EBF6C3032C99D91D00DF9CCE /* DefaultsAppApp.swift */,
 				EBF6C3052C99D91D00DF9CCE /* ContentView.swift */,
 				EBF6C3112C99DB9800DF9CCE /* DetalleView.swift */,
@@ -68,6 +75,16 @@
 				EBF6C30A2C99D91F00DF9CCE /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		EBF6C3132C99DF7B00DF9CCE /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				EBF6C3162C99DF8A00DF9CCE /* MarioBros.mp3 */,
+				EBF6C3152C99DF8A00DF9CCE /* MarioCastillo.mp3 */,
+				EBF6C3142C99DF8A00DF9CCE /* MarioMundoAgua.mp3 */,
+			);
+			path = Sounds;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -129,6 +146,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				EBF6C30B2C99D91F00DF9CCE /* Preview Assets.xcassets in Resources */,
+				EBF6C3172C99DF8A00DF9CCE /* MarioMundoAgua.mp3 in Resources */,
+				EBF6C3192C99DF8A00DF9CCE /* MarioBros.mp3 in Resources */,
+				EBF6C3182C99DF8A00DF9CCE /* MarioCastillo.mp3 in Resources */,
 				EBF6C3082C99D91F00DF9CCE /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

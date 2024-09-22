@@ -6,8 +6,12 @@
 //
 
 import SwiftUI
+import AVKit
 
 struct ContentView: View {
+    
+    @State var audioPlayer: AVAudioPlayer!
+    
     var body: some View {
         VStack {
             NavigationStack {
@@ -39,9 +43,28 @@ struct ContentView: View {
                     DetalleView()
                 }
                 .buttonStyle(.borderedProminent)
+                
+                HStack{
+                    Button("Play") {
+                        self.audioPlayer.play()
+                    }
+                    Button("Stop") {
+                        self.audioPlayer.stop()
+                    }
+                }
             }
         }
         .padding()
+        .onAppear(){
+            let sound = Bundle.main.path(forResource: "MarioBros", ofType: "mp3")
+            do{
+                self.audioPlayer = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: sound!))
+                self.audioPlayer.play()
+            }catch{
+                print("Error al cargar audio: \(error)")
+            }
+        }
+        
     }
 }
 
