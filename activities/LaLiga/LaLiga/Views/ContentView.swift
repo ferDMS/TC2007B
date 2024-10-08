@@ -7,6 +7,8 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject private var modelData = ModelData()
+    
     @State private var bgColor: BackgroundColor = .brown
     @State private var fontColor: FontColor = .black
     
@@ -15,6 +17,7 @@ struct ContentView: View {
             DashboardView(bgColor: bgColor, fontColor: fontColor)
                 .background(bgColor.colors[0])
                 .foregroundColor(fontColor.color)
+                .environmentObject(modelData)
         }
         .onAppear {
             setDefaultUserSettings()
@@ -24,8 +27,7 @@ struct ContentView: View {
         }
     }
 }
-    
-    #Preview {
-        ContentView()
-            .environment(ModelData())
-    }
+
+#Preview {
+    ContentView()
+}

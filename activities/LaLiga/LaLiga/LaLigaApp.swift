@@ -22,12 +22,9 @@ struct LaLigaApp: App {
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
-    @State private var modelData = ModelData()
-    
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environment(modelData)
         }
     }
 }

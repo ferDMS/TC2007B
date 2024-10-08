@@ -40,7 +40,7 @@ class DataFetcher {
     }
     
     func getData() {
-        self.matchesList = []
+        self.matchesList.removeAll()
         
         db.collection("matches").order(by: "Season").getDocuments{(querySnapshot, err) in
             if err != nil {
@@ -48,6 +48,9 @@ class DataFetcher {
             }
             else {
                 if querySnapshot != nil {
+                    
+                    var matchesListIn : [MatchModel] = []
+                    
                     // For every document in the collection
                     for documentItem in querySnapshot!.documents {
                         let data = documentItem.data()
@@ -81,11 +84,13 @@ class DataFetcher {
                         )
                         
                         // Append object to list
-                        self.matchesList.append(newMatch)
+                        matchesListIn.append(newMatch)
                     }
                     
+                    print("Obtained \(matchesListIn.count) matches")
+                    self.matchesList = matchesListIn
+                    
                     // Update local copy of matches
-                    print("Obtained \(self.matchesList.count) matches")
                 } else {
                     print("No data")
                 }

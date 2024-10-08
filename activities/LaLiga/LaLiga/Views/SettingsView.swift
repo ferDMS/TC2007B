@@ -7,6 +7,7 @@
 import SwiftUI
 
 struct SettingsView: View {
+    @EnvironmentObject var modelData: ModelData
     @State public var selectedBgColor: BackgroundColor
     @State public var selectedFontColor: FontColor
     
@@ -53,4 +54,5 @@ struct SettingsView: View {
 
 #Preview {
     SettingsView(selectedBgColor: BackgroundColor.red, selectedFontColor: FontColor.blue)
+        .environmentObject(ModelData())
 }

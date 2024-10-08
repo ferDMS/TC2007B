@@ -2,7 +2,7 @@ import SwiftUI
 import Charts
 
 struct DetailView: View {
-    @Environment(ModelData.self) var modelData
+    @EnvironmentObject var modelData: ModelData
     var team: String
     
     var teamPerformance: [TeamPerformance] {
@@ -94,5 +94,5 @@ struct DetailView: View {
 
 #Preview {
     DetailView(team: "Barcelona")
-        .environment(ModelData())
+        .environmentObject(ModelData())
 }
