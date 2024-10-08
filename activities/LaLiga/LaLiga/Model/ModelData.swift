@@ -9,7 +9,8 @@ import Foundation
 
 @Observable
 class ModelData {
-    var matches: [MatchModel] = []
+
+    var matchesList: [MatchModel] = []
     
     init() {
         loadMatches()
@@ -24,7 +25,7 @@ class ModelData {
         do {
             let data = try Data(contentsOf: url)
             let decoder = JSONDecoder()
-            matches = try decoder.decode([MatchModel].self, from: data)
+            matchesList = try decoder.decode([MatchModel].self, from: data)
         } catch {
             print("Failed to load and decode LaLiga.json: \(error)")
         }

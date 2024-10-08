@@ -8,7 +8,7 @@ struct DetailView: View {
     var teamPerformance: [TeamPerformance] {
         var performanceDict: [String: Int] = [:]
         
-        for match in modelData.matches {
+        for match in modelData.matchesList {
             if match.HomeTeam == team {
                 performanceDict[match.Season, default: 0] += Int(match.FTHG) ?? 0
             } else if match.AwayTeam == team {
@@ -28,7 +28,7 @@ struct DetailView: View {
     var teamWinPerformance: [TeamPerformance] {
         var winDict: [String: Int] = [:]
         
-        for match in modelData.matches {
+        for match in modelData.matchesList {
             if (match.HomeTeam == team && match.FTR == "H") || (match.AwayTeam == team && match.FTR == "A") {
                 winDict[match.Season, default: 0] += 1
             }

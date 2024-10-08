@@ -11,7 +11,7 @@ struct DashboardView: View {
     var teamGoals: [TeamGoals] {
         var goalsDict: [String: Int] = [:]
         
-        for match in modelData.matches {
+        for match in modelData.matchesList {
             if let fthg = Int(match.FTHG), let ftag = Int(match.FTAG) {
                 goalsDict[match.HomeTeam, default: 0] += fthg
                 goalsDict[match.AwayTeam, default: 0] += ftag
@@ -25,7 +25,7 @@ struct DashboardView: View {
     var teamWins: [TeamWins] {
         var winsDict: [String: Int] = [:]
         
-        for match in modelData.matches {
+        for match in modelData.matchesList {
             if match.FTR == "H" {
                 winsDict[match.HomeTeam, default: 0] += 1
             } else if match.FTR == "A" {
