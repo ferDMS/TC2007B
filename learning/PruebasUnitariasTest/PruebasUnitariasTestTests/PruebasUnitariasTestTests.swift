@@ -8,29 +8,32 @@
 import XCTest
 @testable import PruebasUnitariasTest
 
+// Very useful to test acceptance criteria
 final class PruebasUnitariasTestTests: XCTestCase {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    // Testing function
+    func testPositiveTip() throws {
+        let calc = calcTotalWithTip(base: 100, tip: 10)
+        let expected: Double = 110
+        XCTAssertEqual(calc, expected, "Positive tip should be correct")
+    }
+    
+    // Testing function
+    func testNegativeTip() throws {
+        let calc = calcTotalWithTip(base: 100, tip: -10)
+        let expected: Double = 0
+        XCTAssertEqual(calc, expected, "Negative tip should be 0")
+    }
+    
+    // Testing views / testing through views
+    func testCalcInView() throws {
+        let view = ContentView(base: 100.0, tip: 10.0)
+        let calc = view.calc()
+        
+        let expected: Double = 110
+        
+        XCTAssertEqual(calc, expected, "Negative tip should be 0")
     }
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
-    }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
 
 }

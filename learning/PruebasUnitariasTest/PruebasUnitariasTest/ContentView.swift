@@ -8,17 +8,36 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State public var base: Double
+    @State public var tip: Double
+    @State public var total = 0.0
+    
+    
+    func calc() -> Double {
+        if (tip < 0) {
+            return 0.0
+        } else {
+            let total = base + base * (tip / 100)
+            return total
+        }
+    }
+    
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            Text("Unit tests")
+            
+            Button("Calc") {
+                total = calc()
+            }
+            .buttonStyle(.borderedProminent)
+            
+            Text("Total: \(total)")
         }
         .padding()
     }
 }
 
 #Preview {
-    ContentView()
+    ContentView(base: 100, tip: 10)
 }

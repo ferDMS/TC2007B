@@ -29,9 +29,30 @@
 		EBF84A852CB97DF90033ADD8 /* PruebasUnitariasTestUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PruebasUnitariasTestUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		EBF84A9A2CB97FC60033ADD8 /* Exceptions for "PruebasUnitariasTest" folder in "PruebasUnitariasTest" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Functions.swift,
+			);
+			target = EBF84A6A2CB97DF80033ADD8 /* PruebasUnitariasTest */;
+		};
+		EBF84A9B2CB97FC60033ADD8 /* Exceptions for "PruebasUnitariasTest" folder in "PruebasUnitariasTestTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Functions.swift,
+			);
+			target = EBF84A7A2CB97DF90033ADD8 /* PruebasUnitariasTestTests */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		EBF84A6D2CB97DF80033ADD8 /* PruebasUnitariasTest */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				EBF84A9A2CB97FC60033ADD8 /* Exceptions for "PruebasUnitariasTest" folder in "PruebasUnitariasTest" target */,
+				EBF84A9B2CB97FC60033ADD8 /* Exceptions for "PruebasUnitariasTest" folder in "PruebasUnitariasTestTests" target */,
+			);
 			path = PruebasUnitariasTest;
 			sourceTree = "<group>";
 		};

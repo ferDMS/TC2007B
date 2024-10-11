@@ -11,7 +11,7 @@ import SwiftUI
 struct PruebasUnitariasTestApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(base: 100.0, tip: 10.0)
         }
     }
 }
