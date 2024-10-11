@@ -43,14 +43,14 @@ extension Color {
 enum BackgroundColor: String, CaseIterable {
     case brown, blue, red
     
-    var colors: [Color] {
+    var color: Color {
         switch self {
         case .brown:
-            return [.brownLight, .brownNormal, .brownDark]
+            return .brownLight
         case .blue:
-            return [.blueLight, .blueNormal, .blueDark]
+            return .blueLight
         case .red:
-            return [.redLight, .redNormal, .redDark]
+            return .redLight
         }
     }
 }

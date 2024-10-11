@@ -8,22 +8,19 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject private var modelData = ModelData()
+    @StateObject private var settingsData = SettingsData()
     
-    @State private var bgColor: BackgroundColor = .brown
-    @State private var fontColor: FontColor = .black
+    init() {
+        loadDefaultSettings()
+    }
     
     var body: some View {
         VStack {
-            DashboardView(bgColor: bgColor, fontColor: fontColor)
-                .background(bgColor.colors[0])
-                .foregroundColor(fontColor.color)
+            DashboardView()
+                .background(settingsData.bgColor.color)
+                .foregroundColor(settingsData.fontColor.color)
                 .environmentObject(modelData)
-        }
-        .onAppear {
-            setDefaultUserSettings()
-            let (bgColor, fontColor) = loadUserSettings()
-            self.bgColor = bgColor
-            self.fontColor = fontColor
+                .environmentObject(settingsData)
         }
     }
 }

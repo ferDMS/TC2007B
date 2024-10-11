@@ -3,8 +3,8 @@ import Charts
 
 struct DashboardView: View {
     @EnvironmentObject var modelData: ModelData
-    @State var bgColor: BackgroundColor
-    @State var fontColor: FontColor
+    @EnvironmentObject var settingsData: SettingsData
+    
     @State private var selectedTeam: String?
     
     var body: some View {
@@ -19,13 +19,13 @@ struct DashboardView: View {
                             .fontWeight(.bold)
                     }
                     
-                    NavigationLink(destination: SettingsView(selectedBgColor: bgColor, selectedFontColor: fontColor)) {
+                    NavigationLink(destination: SettingsView()) {
                         Text("Go to Settings")
                             .font(.title2)
                             .padding()
-                            .background(bgColor.colors[1])
                             .cornerRadius(10)
                     }
+                    .buttonStyle(BorderedButtonStyle())
                     .padding(.top, 20)
                     
                     Text("Soccer Dashboard")
@@ -104,11 +104,13 @@ struct DashboardView: View {
                 }
                 .padding()
             }
+            .background(settingsData.bgColor.color)
         }
     }
 }
 
 #Preview {
-    DashboardView(bgColor: BackgroundColor.brown, fontColor: FontColor.black)
+    DashboardView()
         .environmentObject(ModelData())
+        .environmentObject(SettingsData())
 }

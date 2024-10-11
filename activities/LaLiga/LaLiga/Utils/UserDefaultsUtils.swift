@@ -7,7 +7,7 @@
 
 import Foundation
 
-func setDefaultUserSettings() {
+func loadDefaultSettings() {
     let defaults = UserDefaults.standard
     
     if defaults.string(forKey: "bgColor") == nil {
@@ -19,20 +19,24 @@ func setDefaultUserSettings() {
     }
 }
 
-func loadUserSettings() -> (BackgroundColor, FontColor) {
+func loadBackgroundColor() -> BackgroundColor {
     let defaults = UserDefaults.standard
-    
-    let bgColorString = defaults.string(forKey: "bgColor") ?? "brown"
-    let bgColor = BackgroundColor(rawValue: bgColorString) ?? .brown
-    
-    let fontColorString = defaults.string(forKey: "fontColor") ?? "black"
-    let fontColor = FontColor(rawValue: fontColorString) ?? .black
-    
-    return (bgColor, fontColor)
+    let bgColorString = defaults.string(forKey: "bgColor")
+    return BackgroundColor(rawValue: bgColorString ?? "brown")!
 }
 
-func saveUserSettings(bgColor: BackgroundColor, fontColor: FontColor) {
+func loadFontColor() -> FontColor {
     let defaults = UserDefaults.standard
-    defaults.set(bgColor.rawValue, forKey: "bgColor")
-    defaults.set(fontColor.rawValue, forKey: "fontColor")
+    let fontColorString = defaults.string(forKey: "fontColor")
+    return FontColor(rawValue: fontColorString ?? "black")!
+}
+
+func saveBackgroundColor(_ bgColor: BackgroundColor?) {
+    let defaults = UserDefaults.standard
+    defaults.set(bgColor?.rawValue, forKey: "bgColor")
+}
+
+func saveFontColor(_ fontColor: FontColor?) {
+    let defaults = UserDefaults.standard
+    defaults.set(fontColor?.rawValue, forKey: "fontColor")
 }

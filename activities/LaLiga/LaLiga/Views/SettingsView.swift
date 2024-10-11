@@ -8,8 +8,7 @@ import SwiftUI
 
 struct SettingsView: View {
     @EnvironmentObject var modelData: ModelData
-    @State public var selectedBgColor: BackgroundColor
-    @State public var selectedFontColor: FontColor
+    @EnvironmentObject var settingsData: SettingsData
     
     var body: some View {
         VStack {
@@ -18,7 +17,7 @@ struct SettingsView: View {
                 .fontWeight(.bold)
             
             Section(header: Text("Background Color")) {
-                Picker("Background Color", selection: $selectedBgColor) {
+                Picker("Background Color", selection: $settingsData.bgColor) {
                     ForEach(BackgroundColor.allCases, id: \.self) { color in
                         Text(color.rawValue.capitalized).tag(color)
                     }
@@ -27,7 +26,7 @@ struct SettingsView: View {
             }
             
             Section(header: Text("Font Color")) {
-                Picker("Font Color", selection: $selectedFontColor) {
+                Picker("Font Color", selection: $settingsData.fontColor) {
                     ForEach(FontColor.allCases, id: \.self) { color in
                         Text(color.rawValue.capitalized).tag(color)
                     }
@@ -38,21 +37,12 @@ struct SettingsView: View {
             Spacer()
         }
         .padding(20)
-        .onAppear {
-            let (bgColor, fontColor) = loadUserSettings()
-            self.selectedBgColor = bgColor
-            self.selectedFontColor = fontColor
-        }
-        .onChange(of: selectedBgColor) {
-            saveUserSettings(bgColor: selectedBgColor, fontColor: selectedFontColor)
-        }
-        .onChange(of: selectedFontColor) {
-            saveUserSettings(bgColor: selectedBgColor, fontColor: selectedFontColor)
-        }
+        .background(settingsData.bgColor.color)
     }
 }
 
 #Preview {
-    SettingsView(selectedBgColor: BackgroundColor.red, selectedFontColor: FontColor.blue)
+    SettingsView()
         .environmentObject(ModelData())
+        .environmentObject(SettingsData())
 }

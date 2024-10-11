@@ -3,6 +3,8 @@ import Charts
 
 struct DetailView: View {
     @EnvironmentObject var modelData: ModelData
+    @EnvironmentObject var settingsData: SettingsData
+    
     var team: String
     
     var teamPerformance: [TeamPerformance] {
@@ -89,10 +91,12 @@ struct DetailView: View {
             .padding()
             .frame(height: 350)
         }
+        .background(settingsData.bgColor.color)
     }
 }
 
 #Preview {
     DetailView(team: "Barcelona")
         .environmentObject(ModelData())
+        .environmentObject(SettingsData())
 }
