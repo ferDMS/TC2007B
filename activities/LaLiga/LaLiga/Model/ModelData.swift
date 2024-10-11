@@ -38,6 +38,15 @@ class ModelData: ObservableObject {
         }
     }
     
+    func addMatch(match: MatchModel) {
+        
+        let dataSender = DataSender()
+        
+        dataSender.addData(matchItem: match)
+        
+        matchesList.append(match)
+    }
+    
     private func updateDerivedData() {
         // Update teamGoals
         var goalsDict: [String: Int] = [:]

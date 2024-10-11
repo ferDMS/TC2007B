@@ -15,6 +15,7 @@ struct SettingsView: View {
             Text("Settings")
                 .font(.largeTitle)
                 .fontWeight(.bold)
+                .padding(.vertical, 20)
             
             Section(header: Text("Background Color")) {
                 Picker("Background Color", selection: $settingsData.bgColor) {
@@ -24,6 +25,7 @@ struct SettingsView: View {
                 }
                 .pickerStyle(SegmentedPickerStyle())
             }
+            .padding(.top, 20)
             
             Section(header: Text("Font Color")) {
                 Picker("Font Color", selection: $settingsData.fontColor) {
@@ -33,6 +35,7 @@ struct SettingsView: View {
                 }
                 .pickerStyle(SegmentedPickerStyle())
             }
+            .padding(.top, 20)
             
             Spacer()
         }

@@ -13,32 +13,6 @@ class DataFetcher {
     
     var matchesList: [MatchModel] = []
     
-    func addData(matchItem : MatchModel) {
-        
-        let docRef = db.collection("matches").document(matchItem.id)
-        
-        docRef.setData([
-            "Season": matchItem.Season,
-            "Date": matchItem.Date,
-            "HomeTeam": matchItem.HomeTeam,
-            "AwayTeam": matchItem.AwayTeam,
-            "FTHG": matchItem.FTHG,
-            "FTAG": matchItem.FTAG,
-            "FTR": matchItem.FTR,
-            "HTHG": matchItem.HTHG,
-            "HTAG": matchItem.HTAG,
-            "HTR": matchItem.HTR
-        ]) {error in
-            if let error = error {
-                print("Error adding document: \(error)")
-            } else {
-                print("Document added with ID: \(docRef.documentID)")
-            }
-        }
-        
-        self.matchesList.append(matchItem)
-    }
-    
     func getData() {
         self.matchesList.removeAll()
         
@@ -67,7 +41,8 @@ class DataFetcher {
                         let hthg = data["HTHG"] as! String
                         let htag = data["HTAG"] as! String
                         let htr = data["HTR"] as! String
-
+                        let isCustom = data["isCustom"] as? Bool ?? false
+                        
                         // Generate match object
                         let newMatch = MatchModel(
                             id: id,
@@ -80,7 +55,8 @@ class DataFetcher {
                             FTR: ftr,
                             HTHG: hthg,
                             HTAG: htag,
-                            HTR: htr
+                            HTR: htr,
+                            isCustom: isCustom
                         )
                         
                         // Append object to list

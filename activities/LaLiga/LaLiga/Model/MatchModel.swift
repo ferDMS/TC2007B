@@ -7,8 +7,8 @@
 
 import Foundation
 
-public struct MatchModel: Codable, Identifiable {
-    public var id: String
+struct MatchModel: Identifiable {
+    var id: String
     var Season: String
     var Date: String
     var HomeTeam: String
@@ -19,6 +19,7 @@ public struct MatchModel: Codable, Identifiable {
     var HTHG: String
     var HTAG: String
     var HTR: String
+    var isCustom: Bool = false
 }
 
 struct TeamGoals: Identifiable {

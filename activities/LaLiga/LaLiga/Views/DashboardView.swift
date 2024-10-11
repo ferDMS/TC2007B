@@ -19,15 +19,6 @@ struct DashboardView: View {
                             .fontWeight(.bold)
                     }
                     
-                    NavigationLink(destination: SettingsView()) {
-                        Text("Go to Settings")
-                            .font(.title2)
-                            .padding()
-                            .cornerRadius(10)
-                    }
-                    .buttonStyle(BorderedButtonStyle())
-                    .padding(.top, 20)
-                    
                     Text("Soccer Dashboard")
                         .font(.largeTitle)
                         .fontWeight(.bold)
@@ -38,6 +29,20 @@ struct DashboardView: View {
                         .scaledToFit()
                         .frame(height: 150)
                         .padding()
+                    
+                    NavigationLink(destination: SettingsView()) {
+                        Text("Settings Menu")
+                            .font(.title2)
+                            .foregroundColor(.white)
+                    }
+                    .buttonStyle(.borderedProminent)
+                    
+                    NavigationLink(destination: CustomMatchView()) {
+                        Text("Custom Matches Menu")
+                            .font(.title2)
+                            .foregroundColor(.white)
+                    }
+                    .buttonStyle(.borderedProminent)
                                         
                     VStack(alignment: .leading) {
                         Text("Teams with Most Goals")
